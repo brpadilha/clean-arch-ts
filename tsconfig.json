@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    //gera numa pasta separada dist os arquivos convertidos de ts para js
+    "outDir": "dist",
+    "rootDir": "src",
+    "target": "ES2021",
+    // debug para o vscode
+    // gera o js.map para debugar o ts
+    "sourceMap": true,
+    // importante para performance do build
+    "skipLibCheck": true,
+    // evitar alguns erros de import com case sensitive
+    // pode ser problematico para o mac ou linux ou windows quando for buildar
+    "forceConsistentCasingInFileNames": true,
+    // para evitar erros de import
+    "module": "commonjs",
+    // para evitar erros de import e permite criar um arquivo index para exportar outros arquivos
+    "moduleResolution": "node",
+    // ajustar importação de diferentes libs
+    "esModuleInterop": true,
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"],
+      "@/tests/*": ["../tests/*"],
+    },
+    // habilitar outras propriedades do ts ao mesmo tempo
+    // acaba deixando a gente importar null onde não deve
+    // e acaba dando erros na execução e não no desenvolvimento
+    "strict": true,
+    // verifica se não estamos passando null onde não deve
+    "strictNullChecks": true,
+    // verifica se estamos implementando corretamente as interfaces
+    "strictFunctionTypes": true,
+    // faz com que a gente não inicialize ou utilize uma propriedade de uma classe sem atribuir o valor dela
+    "strictPropertyInitialization": true,
+    // não deixa utilizarmos any
+    "noImplicitAny": true,
+  },
+  // incluir todos os arquivos da pasta src dentro do dist do build
+  "include": ["src", "tests"],
+}
