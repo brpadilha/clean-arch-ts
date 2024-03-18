@@ -31,7 +31,7 @@ describe('FacebookAuthenticationService', () => {
     const loadFacebookUserApi = new LoadFacebookUserApiSpy()
     const sut = new FacebookAuthenticationService(loadFacebookUserApi)
 
-    await sut.perform({ token: 'any_token' })
+    await sut.perform({ token: 'any_toke2n' })
 
     expect(loadFacebookUserApi.token).toBe('any_token')
   })
