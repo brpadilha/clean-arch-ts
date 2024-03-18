@@ -10,7 +10,7 @@
     "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "npm test -- --watch",
     "test:coverage": "npm test -- --coverage",
-    "test:staged": "jest -- --findRelatedTests",
+    "test:staged": "jest --findRelatedTests $(git diff --name-only --cached)",
     "prepare": "husky install"
   },
   "keywords": [],
