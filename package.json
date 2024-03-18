@@ -11,7 +11,8 @@
     "test:watch": "npm test -- --watch",
     "test:coverage": "npm test -- --coverage",
     "test:staged": "jest --findRelatedTests $(git diff --name-only --cached)",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
   },
   "keywords": [],
   "author": "",
