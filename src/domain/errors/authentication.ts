@@ -1,4 +1,4 @@
-export class FacebookAuthenticationError extends Error {
+export class AuthenticationError extends Error {
   constructor () {
     super('Authetication failed')
     this.name = 'FacebookAuthenticationError'
