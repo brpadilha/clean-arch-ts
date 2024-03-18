@@ -1,5 +1,5 @@
-import { type AccessToken } from '@/domain/models'
-import { type FacebookAuthenticationError } from '@/domain/errors'
+import { AccessToken } from '@/domain/models'
+import { FacebookAuthenticationError } from '@/domain/errors'
 
 export interface FacebookAuthentication {
   perform: (params: FacebookAuthentication.Params) => Promise<FacebookAuthentication.Result>

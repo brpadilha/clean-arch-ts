@@ -1,4 +1,4 @@
-import { type FacebookAuthentication } from '../../../src/domain/features/facebook-authentication'
+import { FacebookAuthentication } from '@/domain/features/facebook-authentication'
 
 class FacebookAuthenticationService {
   constructor (
