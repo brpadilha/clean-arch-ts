@@ -18,7 +18,7 @@ export class FacebookAuthenticationService {
         await this.userAccount.updateWithFacebook({
           id: accountData.id,
           facebookId: fbData.facebookId,
-          name: accountData.name
+          name: accountData.name ?? fbData.name
         })
       } else {
         await this.userAccount.createFromFacebook(fbData)

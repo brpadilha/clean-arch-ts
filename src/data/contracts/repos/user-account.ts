@@ -33,6 +33,6 @@ namespace UpdateFacebookAccountRepository {
   export type Params = {
     id: string
     facebookId: string
-    name?: string
+    name: string
   }
 }
