@@ -7,16 +7,19 @@ import { mock, MockProxy } from 'jest-mock-extended'
 
 // mockar um objeto
 import { mocked } from 'jest-mock'
+import { TokenGenerator } from '@/data/contracts/crypto'
 
 // mockando o model e mostramos o que queremos que retorne
 jest.mock('@/domain/models/facebook-account')
 describe('FacebookAuthenticationService', () => {
   let facebookApi: MockProxy<LoadFacebookUserApi>
   let userAccountRepo: MockProxy<SaveFacebookAccountRepository & LoadUserAccountRepository>
+  let crypto: MockProxy<TokenGenerator>
   let sut: FacebookAuthenticationService
   const token = 'any_token'
   beforeEach(() => {
     facebookApi = mock()
+    crypto = mock()
 
     // remover o mockResolvedValueOnce e passar para mockResolvedValue
     // para que quando formos mockar novamente para undefined com o mockResolvedValueOnce ele não empilhe ou sobrescreva
@@ -28,7 +31,8 @@ describe('FacebookAuthenticationService', () => {
 
     userAccountRepo = mock()
     userAccountRepo.load.mockResolvedValue(undefined)
-    sut = new FacebookAuthenticationService(facebookApi, userAccountRepo)
+    userAccountRepo.saveWithFacebook.mockResolvedValueOnce({ id: 'any_account_id' })
+    sut = new FacebookAuthenticationService(facebookApi, userAccountRepo, crypto)
   })
 
   it('should call LoadFacebookUserApi api with correct params', async () => {
@@ -67,5 +71,14 @@ describe('FacebookAuthenticationService', () => {
       any: 'any'
     })
     expect(userAccountRepo.saveWithFacebook).toHaveBeenCalledTimes(1)
+  })
+
+  it('should call TokenGenerator with correct params', async () => {
+    await sut.perform({ token })
+
+    expect(crypto.generateToken).toHaveBeenCalledWith({
+      key: 'any_account_id'
+    })
+    expect(crypto.generateToken).toHaveBeenCalledTimes(1)
   })
 })
