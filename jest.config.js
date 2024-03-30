@@ -21,7 +21,8 @@ const config = {
   // para o jest interpretar typescript
   transform: {
     '\\.ts$': 'ts-jest'
-  }
+  },
+  clearMocks: true
 
 };
 
