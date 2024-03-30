@@ -32,7 +32,7 @@ describe('FacebookAuthenticationService', () => {
 
     userAccountRepo = mock()
     userAccountRepo.load.mockResolvedValue(undefined)
-    userAccountRepo.saveWithFacebook.mockResolvedValueOnce({ id: 'any_account_id' })
+    userAccountRepo.saveWithFacebook.mockResolvedValue({ id: 'any_account_id' })
     sut = new FacebookAuthenticationService(facebookApi, userAccountRepo, crypto)
   })
 
@@ -89,5 +89,33 @@ describe('FacebookAuthenticationService', () => {
     const authResult = await sut.perform({ token })
 
     expect(authResult).toEqual(new AccessToken('any_generated_token'))
+  })
+
+  it('should rethrow if LoadFacebookUserApi throws', async () => {
+    // mock de retorno de erro do nosso loadUser
+    facebookApi.loadUser.mockRejectedValueOnce(new Error('fb_error'))
+
+    // não podemos executar o sut como await nesse caso
+    // por dar uma excessão ele dá um crash no teste
+    const promise = sut.perform({ token })
+
+    await expect(promise).rejects.toThrow(new Error('fb_error'))
+  })
+  it('should rethrow if LoadUserAccountRepository throws', async () => {
+    userAccountRepo.load.mockRejectedValueOnce(new Error('load_error'))
+    const promise = sut.perform({ token })
+    await expect(promise).rejects.toThrow(new Error('load_error'))
+  })
+
+  it('should rethrow if SaveFacebookAccountRepository throws', async () => {
+    userAccountRepo.saveWithFacebook.mockRejectedValueOnce(new Error('save_error'))
+    const promise = sut.perform({ token })
+    await expect(promise).rejects.toThrow(new Error('save_error'))
+  })
+
+  it('should rethrow if crypto throws', async () => {
+    crypto.generateToken.mockRejectedValue(new Error('token_error'))
+    const promise = sut.perform({ token })
+    await expect(promise).rejects.toThrow(new Error('token_error'))
   })
 })
