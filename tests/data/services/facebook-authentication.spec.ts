@@ -2,7 +2,7 @@ import { LoadFacebookUserApi } from '@/data/contracts/apis'
 import { SaveFacebookAccountRepository, LoadUserAccountRepository } from '@/data/contracts/repos'
 import { FacebookAuthenticationService } from '@/data/services'
 import { AuthenticationError } from '@/domain/errors'
-import { FacebookAccount } from '@/domain/models'
+import { AccessToken, FacebookAccount } from '@/domain/models'
 import { mock, MockProxy } from 'jest-mock-extended'
 
 // mockar um objeto
@@ -77,7 +77,9 @@ describe('FacebookAuthenticationService', () => {
     await sut.perform({ token })
 
     expect(crypto.generateToken).toHaveBeenCalledWith({
-      key: 'any_account_id'
+      key: 'any_account_id',
+      // podemos pegar uma propriedade estática sem precisar de dar um new AccesToken por exemplo
+      expirationInMs: AccessToken.expirationInMs
     })
     expect(crypto.generateToken).toHaveBeenCalledTimes(1)
   })
