@@ -33,18 +33,22 @@ namespace HttpGetClient {
 }
 
 describe('FacebookApi', () => {
+  let clientId: string
+  let clientSecret: string
   let httpClient: MockProxy<HttpGetClient>
   let token: string
+  let sut: FacebookApi
   beforeAll(() => {
+    clientId = 'any_client_id'
+    clientSecret = 'any_client_secret'
     httpClient = mock()
     token = 'any_client_token'
   })
+
+  beforeEach(() => {
+    sut = new FacebookApi(httpClient, clientId, clientSecret)
+  })
   it('should get app token', async () => {
-    const clientId = 'any_client_id'
-    const clientSecret = 'any_client_secret'
-
-    const sut = new FacebookApi(httpClient, clientId, clientSecret)
-
     await sut.loadUser({ token })
     expect(httpClient.get).toHaveBeenCalledWith({
       url: 'https://graph.facebook.com/outh/access_token',
