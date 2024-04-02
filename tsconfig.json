@@ -4,7 +4,7 @@
     "experimentalDecorators": true,
     //gera numa pasta separada dist os arquivos convertidos de ts para js
     "outDir": "dist",
-    "rootDir": "src",
+    "rootDirs": ["src", "tests"],
     "target": "ES2021",
     // debug para o vscode
     // gera o js.map para debugar o ts
@@ -31,6 +31,7 @@
     "strict": true,
     // não deixa utilizarmos any
     "noImplicitAny": true,
+    "noImplicitOverride": true
   },
   // incluir todos os arquivos da pasta src dentro do dist do build
   "include": ["src", "tests"],

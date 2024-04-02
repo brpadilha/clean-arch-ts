@@ -1,29 +1,23 @@
-/**
- * For a detailed explanation regarding each configuration property, visit:
- * https://jestjs.io/docs/configuration
- */
-
-/** @type {import('jest').Config} */
-const config = {
-  // diretorio onde queremos que seja feita a cobertura de testes
-  collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
-  coverageDirectory: "coverage",
-  coverageProvider: "babel",
-  // para quando encontrar o path com @, ele vai substituir pelo rootdir/src
-  moduleNameMapper: {
-    '@/tests/(.+)':'<rootDir>/tests/$1',
-    '@/(.+)':'<rootDir>/src/$1'
-  },
-  roots: [
-    "<rootDir>/src",
-    "<rootDir>/tests"
+module.exports = {
+  collectCoverageFrom: [
+    '<rootDir>/src/**/*.ts',
+    '!<rootDir>/src/main/**',
+    '!<rootDir>/src/**/index.ts'
   ],
-  // para o jest interpretar typescript
+  coverageDirectory: 'coverage',
+  coverageProvider: 'babel',
+  moduleNameMapper: {
+    '@/tests/(.+)': '<rootDir>/tests/$1',
+    '@/(.+)': '<rootDir>/src/$1'
+  },
+  testMatch: ['**/*.spec.ts'],
+  roots: [
+    '<rootDir>/src',
+    '<rootDir>/tests'
+  ],
   transform: {
     '\\.ts$': 'ts-jest'
   },
-  clearMocks: true
-
-};
-
-module.exports = config;
+  clearMocks: true,
+  setupFiles: ['dotenv/config']
+}
