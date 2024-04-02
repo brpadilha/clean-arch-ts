@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     //gera numa pasta separada dist os arquivos convertidos de ts para js
     "outDir": "dist",
     "rootDir": "src",
@@ -27,12 +29,6 @@
     // acaba deixando a gente importar null onde não deve
     // e acaba dando erros na execução e não no desenvolvimento
     "strict": true,
-    // verifica se não estamos passando null onde não deve
-    "strictNullChecks": true,
-    // verifica se estamos implementando corretamente as interfaces
-    "strictFunctionTypes": true,
-    // faz com que a gente não inicialize ou utilize uma propriedade de uma classe sem atribuir o valor dela
-    "strictPropertyInitialization": true,
     // não deixa utilizarmos any
     "noImplicitAny": true,
   },
