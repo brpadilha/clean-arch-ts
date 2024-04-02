@@ -9,7 +9,9 @@
         "@typescript-eslint/consistent-type-definitions":"off",
         "@typescript-eslint/consistent-type-imports": "off",
         "@typescript-eslint/space-before-function-paren": "off",
-        "@typescript-eslint/return-await": "off"
+        "@typescript-eslint/return-await": "off",
+        "@typescript-eslint/unbound-method": "off"
+
       },
   "overrides": [
     {
