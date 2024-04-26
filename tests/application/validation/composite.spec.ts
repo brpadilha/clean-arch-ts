@@ -1,16 +1,5 @@
 import { mock, MockProxy } from 'jest-mock-extended'
-
-interface Validator {
-  validate: () => Error | undefined
-}
-
-class ValidationComposite {
-  constructor(private readonly validators: Validator[]) { }
-
-  validate(): undefined {
-    return undefined
-  }
-}
+import { ValidationComposite, Validator } from '@/application/validation'
 
 describe('ValidationComposite', () => {
   let sut: ValidationComposite
@@ -31,9 +20,23 @@ describe('ValidationComposite', () => {
   })
 
   it('should return undefined if all Validators return undefined', () => {
-    // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
     const error = sut.validate()
 
     expect(error).toBeUndefined()
+  })
+
+  it('it should return the first error', () => {
+    validator1.validate.mockReturnValueOnce(new Error('error_1'))
+    validator2.validate.mockReturnValueOnce(new Error('error_2'))
+
+    const error = sut.validate()
+    expect(error).toEqual(new Error('error_1'))
+  })
+
+  it('it should returns error', () => {
+    validator2.validate.mockReturnValueOnce(new Error('error_2'))
+
+    const error = sut.validate()
+    expect(error).toEqual(new Error('error_2'))
   })
 })
